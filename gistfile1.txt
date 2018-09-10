@@ -1,0 +1,67 @@
+#include <iostream>
+#include <string>
+#include <chrono>
+#include <thread>
+using namespace std;
+
+string Pmove;
+
+string moves [3] = {"rock", "paper", "scissors"};
+string CapitalMoves [3] = {"Rock", "Paper", "Scissors"};
+string Cmoves [3] = {"rock", "paper", "scissors"};
+string CapitalCmoves [3] = {"Rock", "Paper", "Scissors"};
+string Pwins [6] = {"rockscissors", "paperrock", "scissorspaper", "RockScissors", "PaperRock", "ScissorsPaper"};
+
+int startOver, Vinster, Förluster;
+
+int main(int argc, const char * argv[]) {
+    
+    while (true) {
+        startOver = 0; //Sätter startOver till 0 så att if längre ner kan stämma
+        
+        int number = (rand()%3);
+    
+        std::cout << "Welcome to rock, paper scissors!\nMake your move: ";
+        std::cin >> Pmove;
+    
+        string Cmove;
+
+        //Kollar om spelaren  har gjort ett giltigt drag
+        if((std::find(std::begin(moves), std::end(moves), Pmove) == std::end(moves)) && std::find(std::begin(CapitalMoves), std::end(CapitalMoves), Pmove) == std::end(CapitalMoves)){
+            std::cout << "That is not a valid move" << endl;
+            startOver = 1;
+            }
+        
+        //För att den bara ska kolla om du vann ifall du gjorde ett giltigt drag
+        if (startOver == 0){
+
+            if(find(begin(moves), end(moves), Pmove) != end(moves)){ //Avgör från vilken lista datorn ska välja sitt drag
+                Cmove = Cmoves[number];
+           
+            }else{
+                Cmove = CapitalCmoves[number];
+            }
+            
+            //Skriver ut vad spelaren och datorn valde
+            std::cout << "\nYou chose " << Pmove << "\nComputer chose " << Cmove << "\n" << std::endl;
+        
+            //Kollar om spelarens drag + datorns drag finns med i listan Pwins. Finns den det vinner spelaren, annars vinner datorn. Är dragen lika så blev det lika
+           
+            if(find(begin(Pwins), end(Pwins), Pmove + Cmove) != end(Pwins)){
+                std::cout << "You win!" << std::endl;
+                Vinster ++;
+            
+            }else if (Pmove == Cmove){
+                std::cout << "It's a draw!\n";
+                
+            }else{
+                std::cout << "You lose!\n";
+                Förluster ++;
+            }
+        }
+        //Skriver ut hur många gånger du har vunnit och förlorat
+        cout << "Vinster: " << Vinster << "\n";
+        cout << "Förluster: " << Förluster << "\n\n";
+    }
+    return 0;
+}
